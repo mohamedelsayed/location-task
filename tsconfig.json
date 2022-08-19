@@ -1,0 +1,79 @@
+{
+	"compilerOptions": {
+		"incremental": true,
+		"tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
+		"target": "es2019",
+		"module": "commonjs",
+		/* Generates corresponding '.d.ts' file, should be false for production build*/
+		"declaration": true,
+		/* Generates a sourcemap for each corresponding '.d.ts' file, should be false for production build */
+		"declarationMap": true,
+		/* Generates corresponding '.map' file, should be false for production build */
+		"sourceMap": true,
+		/* Embed the original '.ts' file as string the '.map' file , should be false for production build */
+		"inlineSources": true,
+		/* Redirect output structure to the directory. */
+		"outDir": "./dist",
+		/* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+		"rootDir": ".",
+		/* Import emit helpers from 'tslib'. */
+		"importHelpers": true,
+		"strict": true,
+		/* Raise error on expressions and declarations with an implied 'any' type. */
+		"noImplicitAny": true,
+		/* Raise error on 'this' expressions with an implied 'any' type. */
+		"noImplicitThis": true,
+		/* Parse in strict mode and emit "use strict" for each source file. */
+		"alwaysStrict": true,
+		/* Linter Checks */
+		/* Verify - Report errors on unused locals. */
+		"noUnusedLocals": true,
+		/* Verify - Report errors on unused parameters. */
+		"noUnusedParameters": true,
+		/* Verify - Report error when not all code paths in function return a value. */
+		"noImplicitReturns": true,
+		/* Verify  - Report errors for fallthrough cases in switch statement. */
+		"noFallthroughCasesInSwitch": true,
+		/* Module Resolution Options */
+		/* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+		"moduleResolution": "node",
+		/* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+		"allowSyntheticDefaultImports": false,
+		/* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+		"esModuleInterop": true,
+		/* Experimental Options */
+		/* Enables experimental support for emitting type metadata for decorators which works with the module reflect-metadata. */
+		"emitDecoratorMetadata": true,
+		/* Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.*/
+		"experimentalDecorators": true,
+		"typeRoots": [
+			"./node_modules/@types"
+		],
+		/* Advanced Options */
+		/* Warnings are only about code which is provably unreachable due to the use of JavaScript syntax */
+		"allowUnreachableCode": true,
+		/* Skip type checking of declaration files. */
+		"skipLibCheck": true,
+		/* Disallow inconsistently-cased references to the same file. */
+		"forceConsistentCasingInFileNames": true,
+		/* List of language service plugins to run inside the editor. */
+		"plugins": [],
+		"extendedDiagnostics": false,
+		/* Print names of generated files part of the compilation to the terminal */
+		"listEmittedFiles": true,
+		/* Specify the end of line sequence to be used when emitting files */
+		"newLine": "lf",
+		/* Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported */
+		"noEmitOnError": true,
+		/* Allows importing modules with a ‘.json’ extension */
+		"resolveJsonModule": true,
+		"strictPropertyInitialization": false,
+	},
+	"include": [
+		"src/**/*",
+		"test/**/*"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}
