@@ -30,3 +30,7 @@ docker-compose down
 cd src/migrations
 typeorm migration:create create_users_table
 ```
+## to run test:
+```
+npm test
+```
