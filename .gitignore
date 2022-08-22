@@ -4,4 +4,3 @@ dist
 postgresql
 .env
 .env.local
-package-lock.json
