@@ -13,8 +13,8 @@ module.exports = {
 	],
 	'extends': [
 		'eslint:recommended',
-		'standard', 
-		'plugin:node/recommended', 
+		'standard',
+		'plugin:node/recommended',
 		'plugin:import/errors',
     	'plugin:@typescript-eslint/eslint-recommended',
     	'plugin:@typescript-eslint/recommended',
@@ -65,7 +65,7 @@ module.exports = {
 				tabWidth: 4,
 				ignoreStrings: false,
 				ignoreTemplateLiterals: false
-	
+
 			}],
 			'standard/no-callback-literal': 'off',
 			'complexity': ['error', {

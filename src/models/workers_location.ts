@@ -2,31 +2,33 @@ import {
 	Entity,
 	PrimaryGeneratedColumn,
 	Column,
-	CreateDateColumn,
-} from "typeorm";
-import { Geometry } from "geojson";
+	CreateDateColumn
+} from 'typeorm';
+import {Geometry} from 'geojson';
 
-@Entity("workers_locations")
+@Entity('workers_locations')
 export class WorkerLocation {
+
 	@PrimaryGeneratedColumn()
-	id: number;
+		id: number;
 
 	// TODO: add relation of worker_id to workers table
-	@Column({ type: "int" })
-	worker_id: number;
+	@Column({type: 'int'})
+		worker_id: number;
 
-	@Column({ type: "point" })
-	coordinates: Geometry;
+	@Column({type: 'point'})
+		coordinates: Geometry;
 
 	@Column()
-	is_active: boolean;
+		is_active: boolean;
 
-	@Column({ type: "int" })
-	duration: number;
+	@Column({type: 'int'})
+		duration: number;
 
-	@Column({ type: "timestamp" })
-	generated_at!: Date;
+	@Column({type: 'timestamp'})
+		generated_at!: Date;
 
 	@CreateDateColumn()
-	created_at: Date;
+		created_at: Date;
+
 }

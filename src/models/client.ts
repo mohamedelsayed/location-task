@@ -2,17 +2,19 @@ import {
 	Entity,
 	PrimaryGeneratedColumn,
 	Column,
-	CreateDateColumn,
-} from "typeorm";
+	CreateDateColumn
+} from 'typeorm';
 
-@Entity("clients")
+@Entity('clients')
 export class Client {
-	@PrimaryGeneratedColumn()
-	id: number;
 
-	@Column({ type: "varchar" })
-	name: string;
+	@PrimaryGeneratedColumn()
+		id: number;
+
+	@Column({type: 'varchar'})
+		name: string;
 
 	@CreateDateColumn()
-	created_at: Date;
+		created_at: Date;
+
 }

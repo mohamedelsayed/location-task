@@ -1,6 +1,7 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class createWorkersTable1660734792917 implements MigrationInterface {
+
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(`
         CREATE TABLE IF NOT EXISTS "workers" (
@@ -17,6 +18,7 @@ export class createWorkersTable1660734792917 implements MigrationInterface {
 	}
 
 	public async down(queryRunner: QueryRunner): Promise<void> {
-		await queryRunner.query("DROP TABLE workers");
+		await queryRunner.query('DROP TABLE workers');
 	}
+
 }

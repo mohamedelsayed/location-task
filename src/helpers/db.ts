@@ -1,5 +1,6 @@
-import { ORMConfig } from "../config/db";
-import { Connection, createConnection } from "typeorm";
+import {Connection, createConnection} from 'typeorm';
+import {ORMConfig} from '../config/db';
+
 let connection: Promise<Connection>;
 
 /** create database connection.
@@ -7,16 +8,16 @@ let connection: Promise<Connection>;
  * @returns {Promise<Connection>} database connection.
  */
 export async function createDBConnection(): Promise<Connection> {
-	console.log("Creating database connection");
+	console.log('Creating database connection');
 	// console.log("ORMConfig", ORMConfig);
 	if (connection == null || connection === undefined) {
 		connection = createConnection(ORMConfig)
 			.then((connection) => {
-				console.log("database connection established successfully");
+				console.log('database connection established successfully');
 				return connection;
 			})
 			.catch((error) => {
-				console.log("can not established database connection", error);
+				console.log('can not established database connection', error);
 				throw error;
 			});
 	}

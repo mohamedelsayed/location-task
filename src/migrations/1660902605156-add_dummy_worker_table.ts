@@ -1,6 +1,7 @@
-import { MigrationInterface, QueryRunner } from "typeorm";
+import {MigrationInterface, QueryRunner} from 'typeorm';
 
 export class addDummyWorkerTable1660902605156 implements MigrationInterface {
+
 	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(`
 		INSERT INTO workers (name, site_id)
@@ -12,4 +13,5 @@ export class addDummyWorkerTable1660902605156 implements MigrationInterface {
         DELETE FROM workers
 		WHERE name= 'worker1');`);
 	}
+
 }
