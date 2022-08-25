@@ -65,16 +65,6 @@ export class MqttConnector {
 				this._logger.info('complete');
 			}
 		});
-		// this._client.on('message', (topic: string, message: Buffer) => {
-		// 	if (topic === topicVal) {
-		// 		callback.decode(message);
-		// 	}
-		// }
-		// this._client.on('message', (topic, message) => {
-		// 	if (topic === topicVal) {
-		// 		callback.decode(message);
-		// 	}
-		// });
 	}
 
 }

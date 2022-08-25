@@ -11,7 +11,6 @@ const logger = winston.createLogger({
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// @ts-ignore - ignore the unused variable error
 const dbConnection = createDBConnection(logger);
 
 const mqttConnector = new MqttConnector(logger);
