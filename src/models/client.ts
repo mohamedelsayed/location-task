@@ -1,20 +1,21 @@
-// import {
-// 	Entity,
-// 	PrimaryGeneratedColumn,
-// 	Column,
-// 	CreateDateColumn
-// } from 'typeorm';
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	CreateDateColumn
+} from 'typeorm';
 
-// @Entity('clients')
-// export class Client {
+@Entity('clients')
+// eslint-disable-next-line import/no-unused-modules
+export class Client {
 
-// 	@PrimaryGeneratedColumn()
-// 		id: number;
+	@PrimaryGeneratedColumn()
+		id: number;
 
-// 	@Column({type: 'varchar'})
-// 		name: string;
+	@Column({type: 'varchar'})
+		name: string;
 
-// 	@CreateDateColumn()
-// 		created_at: Date;
+	@CreateDateColumn()
+		created_at: Date;
 
-// }
+}

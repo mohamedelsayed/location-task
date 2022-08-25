@@ -1,5 +1,6 @@
 import {MigrationInterface, QueryRunner} from 'typeorm';
 
+// eslint-disable-next-line import/no-unused-modules
 export class createWorkersTable1660734792917 implements MigrationInterface {
 
 	public async up(queryRunner: QueryRunner): Promise<void> {
