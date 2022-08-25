@@ -1,4 +1,5 @@
 import {Connection, createConnection} from 'typeorm';
+import * as winston from 'winston';
 import {ORMConfig} from '../config/db';
 
 let connection: Promise<Connection>;
@@ -7,17 +8,16 @@ let connection: Promise<Connection>;
  *
  * @returns {Promise<Connection>} database connection.
  */
-export async function createDBConnection(): Promise<Connection> {
-	console.log('Creating database connection');
-	// console.log("ORMConfig", ORMConfig);
+export async function createDBConnection(logger: winston.Logger): Promise<Connection> {
+	logger.info('Creating database connection...');
 	if (connection == null || connection === undefined) {
 		connection = createConnection(ORMConfig)
 			.then((connection) => {
-				console.log('database connection established successfully');
+				logger.info('Database connection created successfully');
 				return connection;
 			})
 			.catch((error) => {
-				console.log('can not established database connection', error);
+				logger.error('Error creating database connection', error);
 				throw error;
 			});
 	}

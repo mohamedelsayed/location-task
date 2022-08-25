@@ -7,7 +7,7 @@ import {MessageHandler} from '../interfaces/MessageHandler';
 const url = `${mqttOptions.protocol}://"${mqttOptions.host}`;
 // type Callback = (message: Buffer) => void;
 // @ts-ignore - MqttConnector will be used in the future
-export class MqttConnector implements MessageHandler {
+export class MqttConnector {
 
 	private _client: mqtt.MqttClient;
 
@@ -50,8 +50,14 @@ export class MqttConnector implements MessageHandler {
 
 	onMessage(topicVal: string, callback: MessageHandler) {
 		this.onMessageCallback(topicVal).subscribe({
-			next: (message: Buffer) => {
-				callback.decode(message);
+			next: async (message: Buffer) => {
+				const decodedMessage = callback.decode(message);
+				const validatedMessage = callback.validateTypes(decodedMessage);
+				this._logger.info(validatedMessage);
+				if (validatedMessage) {
+					const finalValidatedMessage = await callback.validateRefrences(validatedMessage);
+					this._logger.info(finalValidatedMessage);
+				}
 			},
 			error: (error: Error) => {
 				this._logger.error(error);

@@ -1,20 +1,20 @@
-import {
-	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	CreateDateColumn
-} from 'typeorm';
+// import {
+// 	Entity,
+// 	PrimaryGeneratedColumn,
+// 	Column,
+// 	CreateDateColumn
+// } from 'typeorm';
 
-@Entity('clients')
-export class Client {
+// @Entity('clients')
+// export class Client {
 
-	@PrimaryGeneratedColumn()
-		id: number;
+// 	@PrimaryGeneratedColumn()
+// 		id: number;
 
-	@Column({type: 'varchar'})
-		name: string;
+// 	@Column({type: 'varchar'})
+// 		name: string;
 
-	@CreateDateColumn()
-		created_at: Date;
+// 	@CreateDateColumn()
+// 		created_at: Date;
 
-}
+// }
