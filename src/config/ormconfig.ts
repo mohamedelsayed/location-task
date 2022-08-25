@@ -1,5 +1,6 @@
 import {DataSource} from 'typeorm';
 
+// eslint-disable-next-line import/no-unused-modules
 export const connectionSource = new DataSource({
 	name: 'default',
 	type: 'postgres',
@@ -15,4 +16,5 @@ export const connectionSource = new DataSource({
 	subscribers: ['src/subscriber/**/*.ts'],
 	migrationsTableName: 'migrations'
 });
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 connectionSource.initialize();

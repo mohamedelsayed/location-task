@@ -1,5 +1,5 @@
 import * as mqtt from 'mqtt';
-import {Observable} from 'rxjs';
+import {Observable, Subscriber} from 'rxjs';
 import * as winston from 'winston';
 import mqttOptions from '../config/mqttoptions';
 import {MessageHandler} from '../interfaces/MessageHandler';
@@ -37,11 +37,10 @@ export class MqttConnector {
 
 	onMessageCallback(topicVal: string): Observable<any> {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		this._observable = Observable.create((subject: any) => {
+		this._observable = Observable.create((subscriber: Subscriber<any>) => {
 			this._client.on('message', (topic: string, message: Buffer) => {
 				if (topic === topicVal) {
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-					subject.next(message);
+					subscriber.next(message);
 				}
 			});
 		});

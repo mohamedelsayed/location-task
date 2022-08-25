@@ -7,6 +7,7 @@ import {
 import {Geometry} from 'geojson';
 
 @Entity('workers_locations')
+// eslint-disable-next-line import/no-unused-modules
 export class WorkerLocation {
 
 	@PrimaryGeneratedColumn()
