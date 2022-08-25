@@ -15,4 +15,4 @@ const dbConnection = createDBConnection(logger);
 
 const mqttConnector = new MqttConnector(logger);
 
-mqttConnector.onMessage('asset/location/update', new Messages(logger));
+mqttConnector.onMessage('asset/location/update', new Messages(logger, dbConnection));

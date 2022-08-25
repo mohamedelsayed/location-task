@@ -4,10 +4,8 @@ import {
 	Column,
 	CreateDateColumn
 } from 'typeorm';
-import {Geometry} from 'geojson';
 
 @Entity('workers_locations')
-// eslint-disable-next-line import/no-unused-modules
 export class WorkerLocation {
 
 	@PrimaryGeneratedColumn()
@@ -17,8 +15,8 @@ export class WorkerLocation {
 	@Column({type: 'int'})
 		worker_id: number;
 
-	@Column({type: 'point'})
-		coordinates: Geometry;
+	@Column({type: 'varchar'})
+		coordinates: string;
 
 	@Column()
 		is_active: boolean;

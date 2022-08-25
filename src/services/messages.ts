@@ -1,26 +1,27 @@
 import * as winston from 'winston';
 import isValidCoords from 'is-valid-coords';
+import {Connection, Repository} from 'typeorm';
 import {MessageDecode} from '../interfaces/message-decode';
-// import {getManager} from 'typeorm';
 import {Worker} from '../models/worker';
 import {MessageHandler} from '../interfaces/MessageHandler';
-// import {isValidCoordinates} from "is-valid-coordinates";
-// import { Connection } from "typeorm";
-// import { createDBConnection } from "../helpers/db";
-// const isValidCoordinates = require("is-valid-coordinates");
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// @ts-ignore - ignore the unused variable error
-// let dbConnection: Promise<Connection>;
+import {WorkerLocation} from '../models/workers_location';
 
 export class Messages implements MessageHandler {
 
 	private _logger: winston.Logger;
 
+	// private _connection: Promise<Connection>;
+
+	private readonly _repositoryManager: Promise<Repository<WorkerLocation>>;
+
 	/**
 	 * constructor - set logger
 	 */
-	constructor(logger: winston.Logger) {
+	constructor(logger: winston.Logger, connection: Promise<Connection>) {
 		this._logger = logger;
+		// this._connection = connection;
+		this._repositoryManager = connection.then((connection) => connection.getRepository(WorkerLocation));
+		this._logger.info(this._repositoryManager);
 	}
 
 	/**
@@ -85,28 +86,22 @@ export class Messages implements MessageHandler {
 	 * save - save message to database
 	 * @returns Promise<any>
 	 */
-	// public async save(message: MessageDecode): Promise<boolean> {
-	// 	this._logger.info('Saving message...');
-	// 	// const repository = connection.getRepository(WorkerLocation);
-	// 	// let coordinates: Point = {
-	// 	// 	type: "Point",
-	// 	// 	coordinates: [message.coordinates[0], message.coordinates[1]],
-	// 	// };
-	// 	const coordinates = `Point(${message.coordinates[0]},${message.coordinates[1]})`;
-	// 	message.coordinates = coordinates;
-	// 	try {
-	// 		const entityManager = getManager();
-	// 		entityManager.query(`INSERT INTO workers_locations(
-	// worker_id, coordinates, is_active, duration, generated_at)
-	// 		 VALUES (${this.message.worker_id} , ${this.message.coordinates},
-	// 			${this.message.is_active}, ${this.message.duration},
-	// 			 to_timestamp(${this.message.generated_at}/1000));`);
-	// 		console.log('Message saved');
-	// 		return true;
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 		return false;
-	// 	}
-	// }
+	public async save(message: MessageDecode): Promise<boolean> {
+		this._logger.info('Saving message...');
+		const workerLocation = new WorkerLocation();
+		workerLocation.worker_id = message.worker_id;
+		const coordinates = `(${message.coordinates[0]},${message.coordinates[1]})`;
+		workerLocation.coordinates = coordinates;
+		workerLocation.is_active = message.is_active;
+		workerLocation.duration = message.duration;
+		workerLocation.generated_at = new Date(message.generated_at);
+		const saved = await (await this._repositoryManager).save(workerLocation);
+		if (saved) {
+			this._logger.info('Message saved');
+			return true;
+		}
+		this._logger.error('Message not saved');
+		return false;
+	}
 
 }

@@ -9,7 +9,7 @@ let connection: Promise<Connection>;
  * @returns {Promise<Connection>} database connection.
  */
 export async function createDBConnection(logger: winston.Logger): Promise<Connection> {
-	logger.info('Creating database connection...');
+	// logger.info('Creating database connection...');
 	if (connection == null || connection === undefined) {
 		connection = createConnection(ORMConfig)
 			.then((connection) => {

@@ -52,10 +52,13 @@ export class MqttConnector {
 			next: async (message: Buffer) => {
 				const decodedMessage = callback.decode(message);
 				const validatedMessage = callback.validateTypes(decodedMessage);
-				this._logger.info(validatedMessage);
+				// this._logger.info(validatedMessage);
 				if (validatedMessage) {
 					const finalValidatedMessage = await callback.validateRefrences(validatedMessage);
-					this._logger.info(finalValidatedMessage);
+					// this._logger.info(finalValidatedMessage);
+					if (finalValidatedMessage) {
+						await callback.save(finalValidatedMessage);
+					}
 				}
 			},
 			error: (error: Error) => {
