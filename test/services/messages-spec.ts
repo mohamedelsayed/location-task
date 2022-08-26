@@ -58,7 +58,7 @@ describe('Messages', function() {
 		// validate save message test success
 		it('should save message success', async function() {
 			message.worker_id = 1;
-			message.coordinates= [55.1404609680176, 25.0615882873535];
+			message.coordinates = [55.1404609680176, 25.0615882873535];
 			const result = await messages.save(message);
 			expect(result).to.be.true;
 		});
