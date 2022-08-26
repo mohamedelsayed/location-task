@@ -38,7 +38,8 @@ export class Messages implements MessageHandler {
 
 	/**
 	 * validate - validate message object types
-	 * @returns boolean - true if message is valid
+	 * @param message - message to validate
+	 * @return MessageDecode message
 	 */
 	public validateTypes(message: MessageDecode): MessageDecode | null {
 		this._logger.info('Validating message...');
