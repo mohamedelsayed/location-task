@@ -10,18 +10,17 @@ export class Messages implements MessageHandler {
 
 	private _logger: winston.Logger;
 
-	// private _connection: Promise<Connection>;
+	private readonly _workerLocationRepository: Promise<Repository<WorkerLocation>>;
 
-	private readonly _repositoryManager: Promise<Repository<WorkerLocation>>;
+	private readonly _workerRepository: Promise<Repository<Worker>>;
 
 	/**
 	 * constructor - set logger
 	 */
 	constructor(logger: winston.Logger, connection: Promise<Connection>) {
 		this._logger = logger;
-		// this._connection = connection;
-		this._repositoryManager = connection.then((connection) => connection.getRepository(WorkerLocation));
-		this._logger.info(this._repositoryManager);
+		this._workerLocationRepository = connection.then((connection) => connection.getRepository(WorkerLocation));
+		this._workerRepository = connection.then((connection) => connection.getRepository(Worker));
 	}
 
 	/**
@@ -61,7 +60,7 @@ export class Messages implements MessageHandler {
 	 */
 	public async validateRefrences(message: MessageDecode): Promise<MessageDecode | null> {
 		this._logger.info('Validating message references...');
-		const worker = await Worker.findOneBy({id: message.worker_id});
+		const worker = await (await this._workerRepository).findOneBy({id: message.worker_id});
 		if (!worker) {
 			this._logger.error('Invalid worker_id');
 			return null;
@@ -83,12 +82,16 @@ export class Messages implements MessageHandler {
 		workerLocation.is_active = message.is_active;
 		workerLocation.duration = message.duration;
 		workerLocation.generated_at = new Date(message.generated_at);
-		const saved = await (await this._repositoryManager).save(workerLocation);
-		if (saved) {
-			this._logger.info('Message saved');
-			return true;
+		try {
+			const saved = await (await this._workerLocationRepository).save(workerLocation);
+			if (saved) {
+				this._logger.info('Message saved');
+				return true;
+			}
+		} catch (e) {
+			this._logger.error('Message not saved');
+			return false;
 		}
-		this._logger.error('Message not saved');
 		return false;
 	}
 
