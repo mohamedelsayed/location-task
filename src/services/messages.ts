@@ -1,10 +1,10 @@
 import * as winston from 'winston';
-import isValidCoords from 'is-valid-coords';
 import {Connection, Repository} from 'typeorm';
 import {MessageDecode} from '../interfaces/message-decode';
 import {Worker} from '../models/worker';
 import {MessageHandler} from '../interfaces/MessageHandler';
 import {WorkerLocation} from '../models/workers_location';
+import {MessageSchema} from '../dtos/message-schema';
 
 export class Messages implements MessageHandler {
 
@@ -32,6 +32,7 @@ export class Messages implements MessageHandler {
 	decode(message: Buffer): MessageDecode {
 		this._logger.info('Decoding message...');
 		const decodedMessage = JSON.parse(message.toString()) as MessageDecode;
+		decodedMessage.generated_at = parseInt(decodedMessage.generated_at.toString());
 		// this._logger.info(decodedMessage);
 		return decodedMessage;
 	}
@@ -42,26 +43,12 @@ export class Messages implements MessageHandler {
 	 */
 	public validateTypes(message: MessageDecode): MessageDecode | null {
 		this._logger.info('Validating message...');
-		const lon = message.coordinates[0];
-		const lat = message.coordinates[1];
-		// message.generated_at = message.generated_at;
-		const isValidLatLon = isValidCoords(lat, lon);
-		if (!isValidLatLon) {
-			this._logger.error('Invalid coordinates');
-			return null;
-		}
-		if (typeof message.is_active !== 'boolean') {
-			this._logger.error('Invalid is_active');
-			return null;
-		}
-		if (typeof message.duration !== 'number') {
-			this._logger.error('Invalid duration');
-			return null;
-		}
-		message.generated_at = parseInt(message.generated_at.toString());
-		const checkDate = new Date(message.generated_at);
-		if (checkDate.toString() === 'Invalid Date') {
-			this._logger.error('Invalid generated_at');
+		const validationResult = MessageSchema.validate(message);
+		const {error} = validationResult;
+		if (error) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+			const errMsg = validationResult?.error?.details.map((i: { message: any; }) => i.message).join(',');
+			this._logger.error(errMsg);
 			return null;
 		}
 		return message;
@@ -84,7 +71,8 @@ export class Messages implements MessageHandler {
 
 	/**
 	 * save - save message to database
-	 * @returns Promise<any>
+	 * @param message - message to save
+	 * @returns Promise<boolean>
 	 */
 	public async save(message: MessageDecode): Promise<boolean> {
 		this._logger.info('Saving message...');
