@@ -1,8 +1,9 @@
 // import 'dotenv/config';
 // import {expect} from 'chai';
-// const sinon = require('sinon');
-// const faker = require('faker');
-// const {Messages} = require('../../src/services/messages');
+// import * as sinon from 'sinon';
+// import * as faker from 'faker';
+// import {Messages} from '../../src/services/messages';
+// import {logger} from '../../src/helpers/logger';
 
 // // eslint-disable-next-line @typescript-eslint/no-unused-vars\
 // // @ts-ignore
